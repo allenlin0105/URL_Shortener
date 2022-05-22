@@ -1,0 +1,211 @@
+@import "variables";
+@import '../../../node_modules/compass-mixins/lib/compass';
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+	position: relative;	
+	font-family: PingFangHK, sans-serif;
+	background: $background-color;
+	color: $text-main;
+}
+
+main{
+	position: relative;
+	width: 100%;
+	height: auto;
+	min-height: 700px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", serif;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+@-webkit-keyframes "animate-preloader" {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@keyframes "animate-preloader" {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+#preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	overflow: hidden;
+	background: rgba(33, 33, 33, 0.35);
+	&:before {
+		content: "";
+		position: fixed;
+		top: calc(50% - 30px);
+		left: calc(50% - 30px);
+		border: 6px solid $background-color;
+		border-top-color: #2E87D3;
+		border-bottom-color: #2E87D3;
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		-webkit-animation: animate-preloader 1s linear infinite;
+		animation: animate-preloader 1s linear infinite;
+	}
+}
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+	position: fixed;
+	visibility: hidden;
+	opacity: 0;
+	right: 15px;
+	bottom: 15px;
+	z-index: 996;
+	width: 44px;
+	height: 44px;
+	border-radius: 50px;
+	transition: all 0.4s;
+	border: 2px solid $green-default;
+	i {
+		font-size: 28px;
+		color: $green-default;
+		line-height: 0;
+	}
+	&:hover {
+		background: $green-hover;
+		border-color: $green-hover;
+		color: #fff;		
+		i {
+			color: #fff;
+		}
+	}
+}
+.back-to-top.active {
+	visibility: visible;
+	opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Button
+--------------------------------------------------------------*/
+.green-btn-bg{
+	background: $green-default !important;
+	color: #fff !important;
+	&:hover{
+		background: $green-hover !important;
+	}
+	&:active{
+		background: $green-active !important;
+	}
+	&:disabled{
+		background: $green-disabled !important;
+	}
+}
+.green-btn-text{
+	color: #008E96 !important;
+	&:hover{
+		color: #007A7F !important;
+	}
+	&:active{
+		color: #005755 !important;
+	}
+	&:disabled{
+		color: #79D8DC !important;
+	}
+}
+.blue-btn-bg{
+	background: $blue-default !important;
+	color: #fff !important;
+	&:hover{
+		background: $blue-hover !important;
+	}
+	&:active{
+		background: $blue-active !important;
+	}
+	&:disabled{
+		background: $blue-disabled !important;
+	}
+}
+.red-btn-bg{
+	background: #D21C1B !important;
+	color: #fff !important;
+	&:hover{
+		background: #C4040B !important;
+	}
+	&:active{
+		background: #9D1615 !important;
+	}
+	&:disabled{
+		background: #F0716E !important;
+	}
+}
+.white-btn-bg{
+	background: #FFFFFF !important;
+	color: #00292B !important;
+	&:hover{
+		background: #F1F4F7 !important;
+	}
+	&:active{
+		background: #E7ECF1 !important;
+	}
+}
+
+/*--------------------------------------------------------------
+# Sections General
+--------------------------------------------------------------*/
+section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 32px 0;
+	overflow: hidden;	
+	transition: 0.1s;
+	&.disable{
+		display: none !important;
+		visibility: hidden;
+	}
+	.section-title {
+		margin-bottom: 12px;
+		font-family: OpenSans;
+		text-align: left;
+		small {
+			display: block;
+			font-size: 10px;
+			line-height: 1;
+			margin: 0 0 5px 0;
+			letter-spacing: 0.1px;
+			text-transform: uppercase;
+			color: #aaaaaa;
+		}
+		span {
+			display: block;
+			height: 24px;			
+			font-size: 20px;
+			font-weight: bold;
+			font-stretch: normal;
+			font-style: normal;
+			line-height: 1.2;
+			letter-spacing: 0.2px;
+			color: $text-main;
+		}
+	}
+	&:not(:last-child){
+		border-bottom: 1px solid #E8EDF1;
+	}
+}
+
