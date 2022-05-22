@@ -59,15 +59,13 @@ jobs:
     - name: Build docker image
       run: |-
         docker build \
-          --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" \
+          --tag "gcr.io/$PROJECT_ID/$IMAGE" \
           gcr_test/
 
     # Push the Docker image to Google Container Registry
     - name: Push docker image
       run: |-
-        docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
+        docker push "gcr.io/$PROJECT_ID/$IMAGE"
 
     # Deploy sample image to the GKE cluster
     - name: Deploy
