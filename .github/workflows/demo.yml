@@ -1,7 +1,7 @@
 name: GitHub Actions Demo
 on:
   push:
-    path:
+    paths:
       - '**/frontend/**'
 jobs:
   Explore-GitHub-Actions:
