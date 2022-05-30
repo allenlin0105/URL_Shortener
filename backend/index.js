@@ -74,11 +74,11 @@ router.get('/:link', async (ctx) => {
 
   try {
     const [row] = await table.row(ctx.params.link).get()
-    ctx.body = (row.data)
+    ctx.redirect(row.data[process.env.COLUMN_FAMILY_ID].value[0].value)
+    // ctx.body = (row.data)
   } catch (err) {
     ctx.status = 404
   }
-  //ctx.redirect(row.data[process.env.COLUMN_FAMILY_ID].value[0].value)
 })
 
 app.use(router.routes())

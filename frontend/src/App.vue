@@ -1,12 +1,14 @@
 <template> 
-  <!-- Header -->
-  <header id="header">
-    <div class="logo">
-      <a class="green-btn-text" href="#">Url Shortener</a>
-    </div>
-  </header>
-  <!-- End Header -->
-  <UrlShortener />
+  <div class="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="logo">
+        <a class="green-btn-text" href="#">Url Shortener</a>
+      </div>
+    </header>
+    <!-- End Header -->
+    <UrlShortener />
+  </div>  
   <!-- Footer -->
   <footer id="footer">
     <div class="container d-flex justify-content-end">
@@ -87,12 +89,22 @@ export default {
 	}
 }
 
+html, body, div#app {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  min-height: calc(100% - 60px);
+}
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 #footer {
 	position: relative;
 	width: 100%;
+  height: 60px;
 	border-top: 1px #E0E0E0 solid;
 	color: $dark-text-color;
 	font-size: 14px;

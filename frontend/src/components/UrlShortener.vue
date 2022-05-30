@@ -83,7 +83,7 @@ export default {
       var seconds = this.timeInput.hours * 3600 + this.timeInput.minutes * 60;
       var response = null;
       var reminderModal = new Modal(select('#reminderModal'));
-      var ipAddress = 'http://77da-123-192-190-196.ngrok.io/';
+      var ipAddress = '/api/';
 
       console.log(ipAddress + 'urlgen');
       axios.post(ipAddress + 'urlgen',{
