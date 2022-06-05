@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: url-shorten-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: url-shortener
+      app: url-shorten
       tier: backend
       track: stable
   template:
     metadata:
       labels:
-        app: url-shortener
+        app: url-shorten
         tier: backend
         track: stable
     spec:
@@ -21,7 +21,7 @@ spec:
           secret:
             secretName: google-application-credentials
       containers:
-        - name: backend
+        - name: url-shorten
           image: gcr.io/PROJECT_ID/IMAGE:TAG
           ports:
             - name: http
@@ -32,3 +32,9 @@ spec:
           env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /var/secrets/google/key.json
+            - name: INSTANCE_ID
+              value: url-map
+            - name: TABLE_ID
+              value: url-shortner-table
+            - name: COLUMN_FAMILY_ID
+              value: url-mapping
