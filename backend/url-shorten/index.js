@@ -65,6 +65,5 @@ router.post('/urlgen', async (ctx) => {
   ctx.body = hash.slice(0, 8)
 })
 
-
 app.use(router.routes())
 app.listen(parseInt(process.env.PORT || '3000'))
