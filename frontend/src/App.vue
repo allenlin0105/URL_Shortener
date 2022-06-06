@@ -13,7 +13,7 @@
   <footer id="footer">
     <div class="container d-flex justify-content-end">
       <div class="copyright">
-        &copy; Copyright <strong><span>2022 UrlShortener</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>2022 URLShortener</span></strong>. All Rights Reserved
       </div>
     </div>
   </footer>
