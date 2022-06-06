@@ -1,4 +1,4 @@
-name: Build and Deploy Backend to GKE
+name: Build and Deploy Backend Shorten Service to GKE
 on:
   push:
     branches: 
@@ -12,17 +12,15 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT_ID }}
   SA_KEY: ${{ secrets.GKE_SA_KEY }}
-  CLUSTER_NAME: url-shorten-dev
+  CLUSTER_NAME: url-shortener
   CLUSTER_ZONE: asia-east1-a
-
-
   DEPLOYMENT_NAME: url-shorten-deployment
   IMAGE: url-shorten
   SOURCE_PATH: backend/url-shorten
 
 jobs:
   build-and-deploy:
-    name: Build & Push Image, Deploy Backend
+    name: Build & Push Image, Deploy Backend Shorten Service
     runs-on: ubuntu-latest
 
     # Add "id-token" with the intended permissions.
@@ -63,14 +61,13 @@ jobs:
             $SOURCE_PATH
           docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
 
-      
       # Set up kustomize and credential
       - name: Set up Kustomize
         run: |
           curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
 
-      # create url shorten deployment and service
+      # Create url shorten deployment and service
       - name: Create the backend deployment and service
         run: |
           cd $SOURCE_PATH
