@@ -38,8 +38,9 @@ app.use(json())
 
 router.get('/:link', async (ctx) => {
   if (!validator.isLength(ctx.params.link, { min: 8, max: 8 })) {
-    ctx.status = 400
-    ctx.body = 'ERR_INVALID_LINK'
+    // ctx.status = 400
+    // ctx.body = 'ERR_INVALID_LINK'
+    ctx.redirect("http://34.80.193.44/error404.html")
     return
   }
 
@@ -47,12 +48,14 @@ router.get('/:link', async (ctx) => {
     const [row] = await table.row(ctx.params.link).get()
     const data = JSON.parse(row.data[process.env.COLUMN_FAMILY_ID].value[0].value)
     if (moment(data.expiry) < moment()) {
-      ctx.status = 404
+      // ctx.status = 404
+      ctx.redirect("http://34.80.193.44/error404.html")
     } else {
       ctx.redirect(data.url)
     }
   } catch (err) {
-    ctx.status = 404
+    // ctx.status = 404
+    ctx.redirect("http://34.80.193.44/error404.html")
   }
 })
 
