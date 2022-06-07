@@ -83,7 +83,7 @@ export default {
       var seconds = this.timeInput.hours * 3600 + this.timeInput.minutes * 60;
       var response = null;
       var reminderModal = new Modal(select('#reminderModal'));
-      var ipAddress = 'http://34.80.12.173/api/';
+      var ipAddress = 'http://34.81.49.12/api/';
 
       axios.post(ipAddress + 'urlgen',{
         'url': this.urlInput,
