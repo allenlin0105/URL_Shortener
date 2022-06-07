@@ -53,8 +53,16 @@ router.post('/urlgen', async (ctx) => {
     return
   }
   const hash = crypto.createHash('sha256').update(ctx.request.body.url).digest('base64')
+  let offset = Math.floor(Math.random() * 36);
+ 
+  let key = hash.slice(offset, offset+8)
+  while(key.includes("/")){
+    offset = Math.floor(Math.random() * 36);
+    key = hash.slice(offset, offset+8)
+  }
+
   const row = {
-    key: hash.slice(0, 8),
+    key: key,
     data: {
       [process.env.COLUMN_FAMILY_ID]: {
         value: JSON.stringify({ expiry: moment().add(ctx.request.body.expiry, 'seconds').format(), url: ctx.request.body.url }),
@@ -62,8 +70,9 @@ router.post('/urlgen', async (ctx) => {
     }
   }
   await table.insert(row)
-  ctx.body = hash.slice(0, 8)
+  ctx.body = hash.slice(offset, offset+8)
 })
+
 
 app.use(router.routes())
 app.listen(parseInt(process.env.PORT || '3000'))

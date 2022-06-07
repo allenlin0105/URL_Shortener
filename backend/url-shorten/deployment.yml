@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: url-shorten-deployment
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: url-shorten
@@ -23,6 +22,11 @@ spec:
       containers:
         - name: url-shorten
           image: gcr.io/PROJECT_ID/IMAGE:TAG
+          resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+            requests:
+              cpu: "150m"
           ports:
             - name: http
               containerPort: 3000
