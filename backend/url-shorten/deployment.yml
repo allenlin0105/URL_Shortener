@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-shorten-deployment
+spec:
+  selector:
+    matchLabels:
+      app: url-shorten
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: url-shorten
+        tier: backend
+        track: stable
+    spec:
+      volumes:
+        - name: google-application-credentials
+          secret:
+            secretName: google-application-credentials
+      containers:
+        - name: url-shorten
+          image: gcr.io/PROJECT_ID/IMAGE:TAG
+          resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+            requests:
+              cpu: "150m"
+          ports:
+            - name: http
+              containerPort: 3000
+          volumeMounts:
+            - name: google-application-credentials
+              mountPath: /var/secrets/google
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/google/key.json
+            - name: INSTANCE_ID
+              value: url-map
+            - name: TABLE_ID
+              value: url-shortner-table
+            - name: COLUMN_FAMILY_ID
+              value: url-mapping

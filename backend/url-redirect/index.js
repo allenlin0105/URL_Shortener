@@ -23,7 +23,7 @@ const initBigTable = async () => {
     await table.createFamily(process.env.COLUMN_FAMILY_ID, {
       rule: {
         age: {
-          seconds: 10,
+          seconds: 1209600,
           nanos: 0,
         },
       }
@@ -36,35 +36,6 @@ initBigTable()
 app.use(bodyparser())
 app.use(json())
 
-router.post('/urlgen', async (ctx) => {
-  if (!ctx.request.body.url || !ctx.request.body.expiry) {
-    ctx.status = 400
-    ctx.body = 'ERR_MISSING_REQUIRED_PARAMS'
-    return
-  }
-  if (!validator.isURL(ctx.request.body.url)) {
-    ctx.status = 400
-    ctx.body = 'ERR_INVALID_URL'
-    return
-  }
-  if (!(typeof (ctx.request.body.expiry == 'number') && ctx.request.body.expiry >= 60 && ctx.request.body.expiry <= 1209600)) {
-    ctx.status = 400
-    ctx.body = 'ERR_INVALID_EXPIRY'
-    return
-  }
-  const hash = crypto.createHash('sha256').update(ctx.request.body.url).digest('base64')
-  const row = {
-    key: hash.slice(0, 8),
-    data: {
-      [process.env.COLUMN_FAMILY_ID]: {
-        value: JSON.stringify({ expiry: moment().add(ctx.request.body.expiry, 'seconds').format(), url: ctx.request.body.url }),
-      }
-    }
-  }
-  await table.insert(row)
-  ctx.body = hash.slice(0, 8)
-})
-
 router.get('/:link', async (ctx) => {
   if (!validator.isLength(ctx.params.link, { min: 8, max: 8 })) {
     ctx.status = 400
@@ -74,11 +45,11 @@ router.get('/:link', async (ctx) => {
 
   try {
     const [row] = await table.row(ctx.params.link).get()
-    const { data } = JSON.parse(row)
+    const data = JSON.parse(row.data[process.env.COLUMN_FAMILY_ID].value[0].value)
     if (moment(data.expiry) < moment()) {
       ctx.status = 404
     } else {
-      ctx.body = (data.url)
+      ctx.redirect(data.url)
     }
   } catch (err) {
     ctx.status = 404

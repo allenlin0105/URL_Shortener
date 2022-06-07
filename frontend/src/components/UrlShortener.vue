@@ -83,21 +83,16 @@ export default {
       var seconds = this.timeInput.hours * 3600 + this.timeInput.minutes * 60;
       var response = null;
       var reminderModal = new Modal(select('#reminderModal'));
-      var ipAddress = 'http://localhost:3000/';
+      var ipAddress = 'http://34.80.12.173/api/';
 
-      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-      axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, OPTIONS, post, get';
-      axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
       axios.post(ipAddress + 'urlgen',{
         'url': this.urlInput,
         'expiry': seconds
       })
-      .then(info => (console.log(info)))
-      .catch(error => (console.log(error)));
-
-      setTimeout(() => {
+      .then(response => {
+        console.log(response);
         if(response != null){
-          this.shortenedUrl = ipAddress + response;
+          this.shortenedUrl = ipAddress + "getUrl/" + response.data;
           this.model.body = '縮短網址： ' + this.shortenedUrl;
           reminderModal.show();
         }
@@ -106,7 +101,8 @@ export default {
           this.model.body = '縮短網址已經過期或沒有儲存過！';
           reminderModal.show();
         }
-      }, 300);
+      })
+      .catch(error => (console.log(error)));
     },
     pastUrl(url){
       this.urlInput = url;
