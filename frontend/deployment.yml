@@ -8,7 +8,6 @@ spec:
       app: url-shortener
       tier: frontend
       track: stable
-  replicas: 1
   template:
     metadata:
       labels:
@@ -19,6 +18,11 @@ spec:
       containers:
         - name: frontend
           image: gcr.io/PROJECT_ID/IMAGE:TAG
+          resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+            requests:
+              cpu: "150m"
           lifecycle:
             preStop:
               exec:

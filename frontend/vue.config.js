@@ -20,6 +20,7 @@ module.exports = defineConfig({
         warnings: false,
       },
     },
+    proxy: 'https://localhost:3000'
   },
   lintOnSave : false
 })
