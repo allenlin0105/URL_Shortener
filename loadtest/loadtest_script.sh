@@ -16,7 +16,7 @@ max_thread=$(($base_thread + $gap_thread * 2))
 for ((connection=$base_connection; connection<=$max_connection; connection+=$gap_connection)); do
     for ((thread=$base_thread; thread<=$max_thread; thread+=$gap_thread)); do
         echo "Testing connection=$connection, thread=$thread"
-        wrk -t$thread -c$connection -d30s http://34.81.49.12:80 > ${logs_folder_name}/log_connection_${connection}_thread_${thread}.txt
+        wrk -t$thread -c$connection -d30s http://34.80.193.44:80 > ${logs_folder_name}/log_connection_${connection}_thread_${thread}.txt
         echo "Finish testing"
     done
 done
